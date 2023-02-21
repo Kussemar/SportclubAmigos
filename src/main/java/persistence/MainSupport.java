@@ -46,5 +46,17 @@ public class MainSupport {
             System.out.println(c.toString());
         }
     }
+    public static void numbersOfParticipantsOnEachSport(List<Counter> countersTwo){
+        System.out.println("Find the number of participants on each sport");
+        for (Counter c: countersTwo) {
+            System.out.println(c.toString());
+        }
+    }
+    public static void menAndWomanCount(List<Counter> countersThree){
+        System.out.println("Find the number of men and women in the club");
+        for (Counter c: countersThree) {
+            System.out.println(c.toString());
+        }
+    }
 
 }

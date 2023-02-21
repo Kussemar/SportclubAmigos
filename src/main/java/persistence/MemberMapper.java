@@ -77,7 +77,59 @@ public class MemberMapper {
         return numbersOfParticipantsOnEachTeamList;
     }
 
-        public Member getMemberById(int memberId) {
+
+    public List<Counter> numbersOfParticipantsOnEachSport() {
+
+        List<Counter> numbersOfParticipantsOnEachSportList = new ArrayList<>();
+
+        String sql = "select s.sport, count(r.member_id) as numberOfRegistrations \n" +
+                "from registration r\n" +
+                "inner join sport s\n" +
+                "group by sport;";
+
+        try (Connection connection = database.connect()) {
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    String sport = rs.getString("sport");
+                    int numbersOfRegistrations = rs.getInt("numberOfRegistrations");
+                    numbersOfParticipantsOnEachSportList.add(new Counter(sport, numbersOfRegistrations));
+                }
+            } catch (SQLException throwables) {
+                // TODO: Make own throwable exception and let it bubble upwards
+                throwables.printStackTrace();
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return numbersOfParticipantsOnEachSportList;
+    }
+    public List<Counter> menAndWomanCount() {
+
+        List<Counter> menAndWomanCountList = new ArrayList<>();
+
+        String sql = "SELECT count(gender) \n" +
+                "FROM `sportsclub`.`member`\n" +
+                "group by gender;";
+
+        try (Connection connection = database.connect()) {
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    String count = rs.getString("count(gender)");
+                    menAndWomanCountList.add(new Counter(count));
+                }
+            } catch (SQLException throwables) {
+                // TODO: Make own throwable exception and let it bubble upwards
+                throwables.printStackTrace();
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return menAndWomanCountList;
+    }
+
+    public Member getMemberById(int memberId) {
             Member member = null;
 
             String sql =  "select member_id, name, address, m.zip, gender, city, year " +

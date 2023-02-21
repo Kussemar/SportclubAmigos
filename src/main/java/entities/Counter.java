@@ -4,6 +4,7 @@ public class Counter {
     private  String teamId;
     private String sport;
     private int numbersOfRegistrations;
+    private String count;
 
     public Counter(String teamId, String sport, int numbersOfRegistrations) {
         this.teamId = teamId;
@@ -42,5 +43,15 @@ public class Counter {
                 ", sport='" + sport + '\'' +
                 ", numbersOfRegistrations=" + numbersOfRegistrations +
                 '}';
+    }
+
+
+    public Counter(String sport, int numbersOfRegistrations) {
+        this.sport = sport;
+        this.numbersOfRegistrations = numbersOfRegistrations;
+    }
+
+    public Counter(String count) {
+        this.count = count;
     }
 }
