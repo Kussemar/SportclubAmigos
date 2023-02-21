@@ -1,3 +1,4 @@
+import entities.Counter;
 import entities.Member;
 import persistence.Database;
 import persistence.MemberMapper;
@@ -6,8 +7,8 @@ import java.util.List;
 
 public class Main {
 
-    private final static String USER = "dev";
-    private final static String PASSWORD = "ax2";
+    private final static String USER = "root";
+    private final static String PASSWORD = "mysql123";
     private final static String URL = "jdbc:mysql://localhost:3306/sportsclub?serverTimezone=CET&useSSL=false&allowPublicKeyRetrieval=true";
 
     public static void main(String[] args) {
@@ -15,7 +16,9 @@ public class Main {
         Database db = new Database(USER, PASSWORD, URL);
         MemberMapper memberMapper = new MemberMapper(db);
         List<Member> members = memberMapper.getAllMembers();
+        List<Counter> counters = memberMapper.numbersOfParticipantsOnEachTeam();
 
+        showNumbersOfParticipantsOnEachTeam(counters);
         showMembers(members);
         showMemberById(memberMapper, 13);
 
@@ -59,6 +62,14 @@ public class Main {
             System.out.println(member.toString());
         }
     }
+        private static void showNumbersOfParticipantsOnEachTeam(List<Counter> counters){
+            System.out.println("Find the number of participants on each team");
+            for (Counter c: counters) {
+                System.out.println(c.toString());
+            }
+        }
+
+    }
 
 
-}
+

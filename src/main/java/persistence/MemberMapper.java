@@ -1,5 +1,6 @@
 package persistence;
 
+import entities.Counter;
 import entities.Member;
 
 import java.sql.*;
@@ -44,6 +45,37 @@ public class MemberMapper {
             }
             return memberList;
         }
+
+    public List<Counter> numbersOfParticipantsOnEachTeam() {
+
+        List<Counter> numbersOfParticipantsOnEachTeamList = new ArrayList<>();
+
+        String sql = "select r.team_id, s.sport, count(r.member_id) as numberOfRegistrations \n" +
+                "from registration r \n" +
+                "inner join team t\n" +
+                "on r.team_id = t.team_id\n" +
+                "inner join sport s\n" +
+                "on t.sport_id = s.sport_id\n" +
+                "group by team_id;";
+
+        try (Connection connection = database.connect()) {
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    String teamId = rs.getString("team_id");
+                    String sport = rs.getString("sport");
+                    int numbersOfRegistrations = rs.getInt("numberOfRegistrations");
+                    numbersOfParticipantsOnEachTeamList.add(new Counter(teamId, sport, numbersOfRegistrations));
+                }
+            } catch (SQLException throwables) {
+                // TODO: Make own throwable exception and let it bubble upwards
+                throwables.printStackTrace();
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return numbersOfParticipantsOnEachTeamList;
+    }
 
         public Member getMemberById(int memberId) {
             Member member = null;
