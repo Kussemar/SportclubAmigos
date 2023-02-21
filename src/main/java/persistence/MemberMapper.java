@@ -116,7 +116,7 @@ public class MemberMapper {
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
-                    String count = rs.getString("count(gender)");
+                    int count = rs.getInt("count(gender)");
                     menAndWomanCountList.add(new Counter(count));
                 }
             } catch (SQLException throwables) {

@@ -21,8 +21,9 @@ public class Main {
         List<Counter> counters3 = memberMapper.menAndWomanCount();
 
         MainSupport ms = new MainSupport();
-        ms.showNumbersOfParticipantsOnEachTeam(counters);
         ms.showMembers(members);
+
+        ms.showNumbersOfParticipantsOnEachTeam(counters);
         ms.showMemberById(memberMapper, 13);
         ms.numbersOfParticipantsOnEachSport(counters2);
         ms.menAndWomanCount(counters3);

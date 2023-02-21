@@ -1,10 +1,10 @@
 package entities;
 
 public class Counter {
-    private  String teamId;
+    private String teamId;
     private String sport;
     private int numbersOfRegistrations;
-    private String count;
+    private int count;
 
     public Counter(String teamId, String sport, int numbersOfRegistrations) {
         this.teamId = teamId;
@@ -51,7 +51,20 @@ public class Counter {
         this.numbersOfRegistrations = numbersOfRegistrations;
     }
 
-    public Counter(String count) {
+    public Counter(int count) {
+        this.count = count;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
         this.count = count;
     }
 }
+
+
+
+
+
