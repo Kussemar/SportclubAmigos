@@ -1,14 +1,17 @@
 import entities.Counter;
 import entities.Member;
 import persistence.Database;
+import persistence.MainSupport;
 import persistence.MemberMapper;
 
 import java.util.List;
 
+import static persistence.MainSupport.showNumbersOfParticipantsOnEachTeam;
+
 public class Main {
 
     private final static String USER = "root";
-    private final static String PASSWORD = "mysql123";
+    private final static String PASSWORD = "DEMS1217";
     private final static String URL = "jdbc:mysql://localhost:3306/sportsclub?serverTimezone=CET&useSSL=false&allowPublicKeyRetrieval=true";
 
     public static void main(String[] args) {
@@ -17,10 +20,10 @@ public class Main {
         MemberMapper memberMapper = new MemberMapper(db);
         List<Member> members = memberMapper.getAllMembers();
         List<Counter> counters = memberMapper.numbersOfParticipantsOnEachTeam();
-
-        showNumbersOfParticipantsOnEachTeam(counters);
-        showMembers(members);
-        showMemberById(memberMapper, 13);
+        MainSupport ms = new MainSupport();
+        ms.showNumbersOfParticipantsOnEachTeam(counters);
+        ms.showMembers(members);
+        ms.showMemberById(memberMapper, 13);
 
         /*  
             int newMemberId = insertMember(memberMapper);
@@ -29,45 +32,6 @@ public class Main {
             updateMember(13, memberMapper);
         */
     }
-
-    private static void deleteMember(int memberId, MemberMapper memberMapper) {
-        if (memberMapper.deleteMember(memberId)){
-            System.out.println("Member with id = " + memberId + " is removed from DB");
-        }
-    }
-
-    private static int insertMember(MemberMapper memberMapper) {
-        Member m1 = new Member("Ole Olsen", "Banegade 2", 3700, "Rønne", "m", 1967);
-        Member m2 = memberMapper.insertMember(m1);
-        showMemberById(memberMapper, m2.getMemberId());
-        return m2.getMemberId();
-    }
-
-    private static void updateMember(int memberId, MemberMapper memberMapper) {
-        Member m1 = memberMapper.getMemberById(memberId);
-        m1.setYear(1970);
-        if(memberMapper.updateMember(m1)){
-            showMemberById(memberMapper, memberId);
-        }
-    }
-
-    private static void showMemberById(MemberMapper memberMapper, int memberId) {
-        System.out.println("***** Vis medlem nr. 13: *******");
-        System.out.println(memberMapper.getMemberById(memberId).toString());
-    }
-
-    private static void showMembers(List<Member> members) {
-        System.out.println("***** Vis alle medlemmer *******");
-        for (Member member : members) {
-            System.out.println(member.toString());
-        }
-    }
-        private static void showNumbersOfParticipantsOnEachTeam(List<Counter> counters){
-            System.out.println("Find the number of participants on each team");
-            for (Counter c: counters) {
-                System.out.println(c.toString());
-            }
-        }
 
     }
 
