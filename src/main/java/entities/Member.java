@@ -1,5 +1,7 @@
 package entities;
 
+import java.util.ArrayList;
+
 public class Member {
 
     private int memberId;
@@ -9,6 +11,7 @@ public class Member {
     private String city;
     private String gender;
     private int year;
+    private ArrayList<Registration> registrations = new ArrayList<>();
 
     public Member(String name, String address, int zip, String city, String gender, int year) {
         this.name = name;

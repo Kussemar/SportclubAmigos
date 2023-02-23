@@ -19,9 +19,7 @@ public class MemberMapper {
 
             List<Member> memberList = new ArrayList<>();
 
-            String sql = "select member_id, name, address, m.zip, gender, city, year " +
-                         "from member m inner join zip using(zip) " +
-                         "order by member_id";
+            String sql = "SELECT * FROM member_view;";
 
             try (Connection connection = database.connect()) {
                 try (PreparedStatement ps = connection.prepareStatement(sql)) {

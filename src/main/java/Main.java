@@ -1,8 +1,11 @@
 import entities.Counter;
 import entities.Member;
+import entities.Registration;
 import persistence.Database;
 import persistence.MainSupport;
 import persistence.MemberMapper;
+import persistence.RegistrationMapper;
+
 import java.util.List;
 
 public class Main {
@@ -19,6 +22,14 @@ public class Main {
         List<Counter> counters = memberMapper.numbersOfParticipantsOnEachTeam();
         List<Counter> counters2 = memberMapper.numbersOfParticipantsOnEachSport();
         List<Counter> counters3 = memberMapper.menAndWomanCount();
+        RegistrationMapper registrationMapper = new RegistrationMapper(db);
+        List<Registration> registrations = registrationMapper.getAllRegistration();
+
+        for (Registration registration : registrations) {
+            System.out.println(registration.getMember().getName() + ": " +
+                    registration.getTeam().getSport().getSport() + ", pris: " +
+                    registration.getPrice() + " kr. ");
+        }
 
         MainSupport ms = new MainSupport();
         ms.showMembers(members);
